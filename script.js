@@ -60,26 +60,32 @@ function setupUserDoc(user) {
 
 // Display the dashboard and use a real-time listener to fetch and display data
 function showDashboard(user) {
+  // Hide login and display dashboard
   document.getElementById("login-section").classList.add("hidden");
   document.getElementById("dashboard").classList.remove("hidden");
   document.getElementById("user-name").textContent = user.displayName;
-
-  const userRef = firebase.firestore().collection("user").doc(user.uid);
-  userRef.get().then(doc => {
+  
+  // Set up a real-time listener for the user's document in the "user" collection.
+  const userRef = db.collection("user").doc(user.uid);
+  userRef.onSnapshot(doc => {
     if (doc.exists) {
       const data = doc.data();
       const categories = data.categories || {};
 
-      // Set total time under each category
-      document.getElementById("academic-list").innerHTML = `<li><strong>Time:</strong> ${categories.academic || 0} mins</li>`;
-      document.getElementById("entertainment-list").innerHTML = `<li><strong>Time:</strong> ${categories.entertainment || 0} mins</li>`;
-
+      // Update the numeric displays
+      document.getElementById("academic-data").textContent = categories.academic || 0;
+      document.getElementById("entertainment-data").textContent = categories.entertainment || 0;
+      
+      // // Optionally, update additional lists if needed
+      // document.getElementById("academic-list").innerHTML = `<li>academic: ${categories.academic} mins</li>`;
+      // document.getElementById("entertainment-list").innerHTML = `<li>entertainment: ${categories.entertainment} mins</li>`;
     } else {
       console.warn("No stats found for this user.");
     }
+  }, error => {
+    console.error("Error with onSnapshot:", error);
   });
 }
-
 
 // Test Button: Update academic time by 10 minutes to simulate an update from your extension.
 document.getElementById("update-academic-btn").addEventListener("click", () => {
