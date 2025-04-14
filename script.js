@@ -37,10 +37,10 @@ firebase.auth().onAuthStateChanged(user => {
 
 // Create or update the user document in the "user" collection if needed
 function setupUserDoc(user) {
-  const userRef = db.collection("users").doc(user.uid);
+  const userRef = db.collection("user").doc(user.uid);
   userRef.get().then(doc => {
     if (!doc.exists) {
-      // If no document exists, create one with initial values.
+      // If the document doesn't exist, create it with initial values.
       userRef.set({
         totalTime: 0,
         categories: {
@@ -58,30 +58,27 @@ function setupUserDoc(user) {
   });
 }
 
-// Display the dashboard and listen for real-time updates using onSnapshot
+// Display the dashboard and use a real-time listener to fetch and display data
 function showDashboard(user) {
-  // Hide the login section and show the dashboard
+  // Hide login and display dashboard
   document.getElementById("login-section").classList.add("hidden");
   document.getElementById("dashboard").classList.remove("hidden");
   document.getElementById("user-name").textContent = user.displayName;
-
-  // Listen for real-time changes on this user's Firestore document
+  
+  // Set up a real-time listener for the user's document in the "user" collection.
   const userRef = db.collection("user").doc(user.uid);
   userRef.onSnapshot(doc => {
     if (doc.exists) {
       const data = doc.data();
       const categories = data.categories || {};
-      
-      // Update UI elements with the new data
-      document.getElementById("academic-list").innerHTML = "";
-      document.getElementById("entertainment-list").innerHTML = "";
 
-      if (categories.academic !== undefined) {
-        document.getElementById("academic-list").innerHTML = `<li>academic: ${categories.academic} mins</li>`;
-      }
-      if (categories.entertainment !== undefined) {
-        document.getElementById("entertainment-list").innerHTML = `<li>entertainment: ${categories.entertainment} mins</li>`;
-      }
+      // Update the numeric displays
+      document.getElementById("academic-data").textContent = categories.academic || 0;
+      document.getElementById("entertainment-data").textContent = categories.entertainment || 0;
+      
+      // Optionally, update additional lists if needed
+      document.getElementById("academic-list").innerHTML = `<li>academic: ${categories.academic} mins</li>`;
+      document.getElementById("entertainment-list").innerHTML = `<li>entertainment: ${categories.entertainment} mins</li>`;
     } else {
       console.warn("No stats found for this user.");
     }
@@ -90,7 +87,7 @@ function showDashboard(user) {
   });
 }
 
-// (Test Feature) A button to update the academic time by 10 minutes
+// Test Button: Update academic time by 10 minutes to simulate an update from your extension.
 document.getElementById("update-academic-btn").addEventListener("click", () => {
   const user = firebase.auth().currentUser;
   if (user) {
