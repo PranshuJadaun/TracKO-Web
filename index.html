@@ -5,23 +5,31 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Tracko Dashboard</title>
   <link rel="stylesheet" href="style.css">
+  
+  <!-- Firebase SDKs -->
   <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore-compat.js"></script>
+  
+  <!-- Firebase config file -->
   <script src="firebase-config.js" defer></script>
+  <!-- Main script -->
   <script src="script.js" defer></script>
 </head>
 <body>
+  <!-- Login Section -->
   <div id="login-section" class="center">
     <h1>Welcome to Tracko</h1>
-    <p>Track your productivity and entertainment time easily.</p>
+    <p>Track your time in academic and entertainment modes.</p>
     <button id="login-btn">Sign in with Google</button>
   </div>
 
+  <!-- Dashboard Section -->
   <div id="dashboard" class="hidden">
-    <h1>👋 Hello, <span id="user-name"></span></h1>
-    <button id="logout-btn">Logout</button>
-
+    <div class="dashboard-header">
+      <h1>👋 Hello, <span id="user-name"></span></h1>
+      <button id="logout-btn">Logout</button>
+    </div>
     <div class="stats-container">
       <div class="stats-box">
         <h2>📘 Academic</h2>
@@ -31,9 +39,9 @@
         <h2>🎮 Entertainment</h2>
         <ul id="entertainment-list"></ul>
       </div>
-      <button id="update-academic-btn">Add 10 mins Academic</button>
-      <button id="update-entertainment-btn">Add 10 mins Entertainment</button>
     </div>
+    <!-- Test Button: This is for simulating an update (e.g., from the extension) -->
+    <button id="update-academic-btn">Add 10 mins Academic (Test)</button>
   </div>
 </body>
 </html>
