@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Tracko Dashboard</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css" />
   
   <!-- Firebase SDKs -->
   <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore-compat.js"></script>
-  
-  <!-- Firebase configuration -->
+
+  <!-- Firebase config -->
   <script src="firebase-config.js" defer></script>
-  <!-- Main script -->
+  <!-- Main logic -->
   <script src="script.js" defer></script>
 </head>
 <body>
@@ -27,27 +27,40 @@
   <!-- Dashboard Section -->
   <div id="dashboard" class="hidden">
     <div class="dashboard-header">
-      <h1>👋 Hello, <span id="user-name"></span></h1>
+      <div class="profile-info">
+        <h1>👋 Hello, <span id="user-name"></span></h1>
+      </div>
       <button id="logout-btn">Logout</button>
     </div>
-    
+
     <div class="stats-container">
       <div class="stats-box">
         <h2>📘 Academic</h2>
-        <!-- Display academic time here -->
         <p>Time: <span id="academic-data">0</span> mins</p>
-        <!-- Optionally, you can also have a list if needed -->
         <ul id="academic-list"></ul>
       </div>
       <div class="stats-box">
         <h2>🎮 Entertainment</h2>
-        <!-- Display entertainment time here -->
         <p>Time: <span id="entertainment-data">0</span> mins</p>
         <ul id="entertainment-list"></ul>
       </div>
     </div>
-    
-    <!-- Test Button: used to update academic time and test real-time updating -->
+
+    <div class="coming-soon-section">
+      <h2>📺 Video History (Coming Soon)</h2>
+      <div class="coming-soon-boxes">
+        <div class="coming-box">
+          <h3>📘 Academic Videos</h3>
+          <p>Coming Soon...</p>
+        </div>
+        <div class="coming-box">
+          <h3>🎮 Entertainment Videos</h3>
+          <p>Coming Soon...</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Test Button -->
     <button id="update-academic-btn">Add 10 mins Academic (Test)</button>
   </div>
 </body>
